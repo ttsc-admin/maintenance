@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบแจ้งซ่อม</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; 
+            background-color: #f4f6f9; 
+        }
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+        }
+        iframe {
+            width: 100%;
+            /* แก้ไขตัวเลข 24px เป็นตัวเลขที่คุณจูนไว้ให้พอดีกับโลโก้ */
+            height: calc(100% + 24px); 
+            margin-top: -24px; 
+            border: none;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            iframe {
+                height: calc(100% + 28px); 
+                margin-top: -28px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        <iframe id="gasIframe" src=""></iframe>
+    </div>
+
+    <script>
+        // 1. ดึงค่า parameter 'page' จาก URL ของ GitHub
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page');
+
+        // 2. URL ต้นทางของ Google Apps Script
+        let baseUrl = "https://script.google.com/macros/s/AKfycbz1bkkNLlkO3B7TrgyEvE_gYad9jg2cP1LojubSJvMiRAWIUR0dba8pZx3O7YMKaN-8jw/exec";
+
+        // 3. ตรวจสอบว่ามีการแนบค่า page มาหรือไม่ ถ้ามีให้ประกอบร่าง URL ใหม่
+        if (pageParam === 'admin') {
+            baseUrl += "?page=admin";
+        } else if (pageParam === 'tech') {
+            baseUrl += "?page=tech";
+        }
+
+        // 4. สั่งให้ iframe โหลด URL ที่ถูกต้อง
+        document.getElementById('gasIframe').src = baseUrl;
+    </script>
+</body>
+</html>
