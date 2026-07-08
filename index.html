@@ -38,6 +38,17 @@
     </div>
 
     <script>
+        // 🌟 ฟังก์ชันเสริม: สำหรับเปลี่ยนรูปไอคอนแท็บ (Favicon)
+        function setFavicon(iconUrl) {
+            let link = document.querySelector("link[rel~='icon']");
+            if (!link) {
+                link = document.createElement('link');
+                link.rel = 'icon';
+                document.head.appendChild(link);
+            }
+            link.href = iconUrl;
+        }
+
         // 1. ดึงค่า parameter 'page' จาก URL ของ GitHub
         const urlParams = new URLSearchParams(window.location.search);
         const pageParam = urlParams.get('page');
@@ -45,15 +56,23 @@
         // 2. URL ต้นทางของ Google Apps Script
         let baseUrl = "https://script.google.com/macros/s/AKfycbz1bkkNLlkO3B7TrgyEvE_gYad9jg2cP1LojubSJvMiRAWIUR0dba8pZx3O7YMKaN-8jw/exec";
 
-        // 3. ตรวจสอบเงื่อนไข และเปลี่ยนชื่อแท็บ (document.title) ให้ตรงกับหน้าจอ
+        // 3. ตรวจสอบเงื่อนไข และเปลี่ยนชื่อแท็บ + รูปไอคอน
         if (pageParam === 'admin') {
             baseUrl += "?page=admin";
-            document.title = "ระบบบริหารจัดการงานซ่อม (Dashboard)"; // <-- ชื่อแท็บหน้า Admin
+            document.title = "ระบบบริหารจัดการงานซ่อม (Dashboard)";
+            // 🌟 ไอคอนสำหรับหน้า Admin (รูปเฟืองตั้งค่า)
+            setFavicon("https://img.icons8.com/fluency/96/settings.png");
+            
         } else if (pageParam === 'tech') {
             baseUrl += "?page=tech";
-            document.title = "Technician Portal (สำหรับช่าง)"; // <-- ชื่อแท็บหน้าช่าง
+            document.title = "Technician Portal (สำหรับช่าง)";
+            // 🌟 ไอคอนสำหรับหน้าช่าง (รูปประแจและไขควง)
+            setFavicon("https://img.icons8.com/fluency/96/maintenance.png");
+            
         } else {
-            document.title = "ระบบแจ้งซ่อมบำรุง (Maintenance System)"; // <-- ชื่อแท็บหน้าแจ้งซ่อมปกติ
+            document.title = "ระบบแจ้งซ่อมบำรุง (Maintenance System)";
+            // 🌟 ไอคอนสำหรับหน้าแจ้งซ่อมปกติ (รูปกล่องเครื่องมือ)
+            setFavicon("https://img.icons8.com/fluency/96/toolbox.png");
         }
 
         // 4. สั่งให้ iframe โหลด URL ที่ถูกต้อง
